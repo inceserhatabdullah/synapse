@@ -1,0 +1,22 @@
+volumes:
+  infra_postgres_data:
+
+networks:
+  infra_network:
+    external: true
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: infra_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}
+      POSTGRES_DB: ${DB_NAME:-synapse}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - infra_postgres_data:/var/lib/postgresql/data
+    networks:
+      - infra_network
