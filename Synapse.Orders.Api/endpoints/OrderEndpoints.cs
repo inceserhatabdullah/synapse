@@ -4,11 +4,11 @@ using Synapse.Orders.Api.DTOs;
 
 namespace Synapse.Orders.Api.endpoints;
 
-public class OrderEndpoints
+public class OrderEndpoints : IEndpointDefinition
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("/orders");
+        var group = builder.MapGroup("/orders").RequireAuthorization();
         group.MapPost("/", CreateOrder);
         group.MapGet("/{id:guid}", GetOrder);
     }
@@ -18,14 +18,13 @@ public class OrderEndpoints
         IOrderRepository repository,
         IValidator<CreateOrderRequest> validator)
     {
-        
         var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {
             return Results.ValidationProblem(validationResult.ToDictionary());
         }
-        
+
         // TODO: customerId jwt içerisinden gelecek.
         var currentUserId = Guid.NewGuid();
         var order = new Order(currentUserId);
@@ -34,11 +33,11 @@ public class OrderEndpoints
         {
             order.AddItem(item.ProductId, item.Quantity, item.Price);
         }
-        
+
 
         await repository.AddAsync(order);
         await repository.SaveChangesAsync();
-        
+
         return Results.Created($"/orders/{order.Id}", order);
     }
 
