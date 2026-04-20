@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Synapse.Infrastructure.Persistence;
 using Synapse.Domain.Orders;
 using Synapse.Orders.Api.endpoints;
+using FluentValidation;
+using Synapse.Orders.Api.validators;
 
 DotNetEnv.Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "../.env"));
 
@@ -14,7 +16,6 @@ var dbPort = DotNetEnv.Env.GetString("DB_PORT");
 var dbHost = DotNetEnv.Env.GetString("DB_HOST");
 var port = DotNetEnv.Env.GetString("APP_PORT") ?? "8080";
 
-Console.WriteLine($"DB User: {dbUser},  DB Password: {dbPassword}, DB Name: {dbName} , DB Port: {dbPort} , DB Host: {dbHost}");
 var connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();
 
 var app = builder.Build();
 var apiGroup = app.MapGroup("api/v1");

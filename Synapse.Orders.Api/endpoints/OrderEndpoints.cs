@@ -1,4 +1,6 @@
+using FluentValidation;
 using Synapse.Domain.Orders;
+using Synapse.Orders.Api.DTOs;
 
 namespace Synapse.Orders.Api.endpoints;
 
@@ -11,10 +13,28 @@ public class OrderEndpoints
         group.MapGet("/{id:guid}", GetOrder);
     }
 
-    private async Task<IResult> CreateOrder(IOrderRepository repository)
+    private async Task<IResult> CreateOrder(
+        CreateOrderRequest request,
+        IOrderRepository repository,
+        IValidator<CreateOrderRequest> validator)
     {
-        var order = new Order(Guid.NewGuid());
-        order.AddItem(Guid.NewGuid(), 2, 150.00m);
+        
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return Results.ValidationProblem(validationResult.ToDictionary());
+        }
+        
+        // TODO: customerId jwt içerisinden gelecek.
+        var currentUserId = Guid.NewGuid();
+        var order = new Order(currentUserId);
+
+        foreach (var item in request.Items)
+        {
+            order.AddItem(item.ProductId, item.Quantity, item.Price);
+        }
+        
 
         await repository.AddAsync(order);
         await repository.SaveChangesAsync();
