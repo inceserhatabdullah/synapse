@@ -26,7 +26,10 @@ var connectionString = $"Server={dbHost};Port={dbPort};Database={dbName};User Id
 builder.Services.AddDbContext<AppDbContext>(options => { options.UseNpgsql(connectionString); });
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
