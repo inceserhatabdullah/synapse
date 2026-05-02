@@ -2,5 +2,5 @@
   <Project Path="Synapse.Application/Synapse.Application.csproj" />
   <Project Path="Synapse.Domain/Synapse.Domain.csproj" />
   <Project Path="Synapse.Infrastructure/Synapse.Infrastructure.csproj" />
-  <Project Path="Synapse.Orders.Api/Synapse.Orders.Api.csproj" />
+  <Project Path="Synapse.Presentation\Synapse.Presentation.csproj" />
 </Solution>

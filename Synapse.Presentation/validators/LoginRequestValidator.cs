@@ -1,7 +1,7 @@
 using FluentValidation;
-using Synapse.Orders.Api.DTOs;
+using Synapse.Presentation.DTOs;
 
-namespace Synapse.Orders.Api.validators;
+namespace Synapse.Presentation.validators;
 
 public class LoginRequestValidator: AbstractValidator<LoginRequest>
 {

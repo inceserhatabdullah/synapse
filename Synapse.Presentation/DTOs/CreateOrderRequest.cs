@@ -1,4 +1,4 @@
-namespace Synapse.Orders.Api.DTOs;
+namespace Synapse.Presentation.DTOs;
 
 public record CreateOrderRequest(List<OrderItemRequest> Items);
 

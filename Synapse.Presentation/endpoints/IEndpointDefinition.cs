@@ -1,4 +1,4 @@
-namespace Synapse.Orders.Api.endpoints;
+namespace Synapse.Presentation.endpoints;
 
 public interface IEndpointDefinition
 {

@@ -1,8 +1,8 @@
 using FluentValidation;
 using Synapse.Domain.Orders;
-using Synapse.Orders.Api.DTOs;
+using Synapse.Presentation.DTOs;
 
-namespace Synapse.Orders.Api.endpoints;
+namespace Synapse.Presentation.endpoints;
 
 public class OrderEndpoints : IEndpointDefinition
 {
