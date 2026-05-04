@@ -1,6 +1,6 @@
-namespace Synapse.Infrastructure.Services;
+namespace Synapse.Application.Features.Auth.Interfaces;
 
-public interface IPasswordService
+public interface IPasswordProvider
 {
     string HashPassword(string password);
     bool VerifyHashedPassword(string password, string hashedPassword);

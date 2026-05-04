@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Synapse.Domain.Orders;
 
-namespace Synapse.Infrastructure.Persistence;
+namespace Synapse.Infrastructure.Persistence.Repositories;
 
 public class OrderRepository(AppDbContext context): IOrderRepository
 {

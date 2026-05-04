@@ -1,8 +1,8 @@
-using BCrypt.Net;
+using Synapse.Application.Features.Auth.Interfaces;
 
-namespace Synapse.Infrastructure.Services;
+namespace Synapse.Infrastructure.Auth;
 
-public class PasswordService : IPasswordService
+public class PasswordProvider: IPasswordProvider
 {
     public string HashPassword(string password) => BCrypt.Net.BCrypt.EnhancedHashPassword(password, workFactor: 11);
 

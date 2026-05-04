@@ -1,4 +1,4 @@
-namespace Synapse.Domain.Users;
+namespace Synapse.Domain.Entities;
 
 public class User
 {
@@ -6,9 +6,10 @@ public class User
     public string Username { get; private set; }
     public string Password { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
 
-    private readonly List<UserSession> _userSession = new();
-    public IReadOnlyCollection<UserSession> UserSessions => _userSession.AsReadOnly();
+    private readonly List<UserSession> _sessions = new();
+    public IReadOnlyCollection<UserSession> Sessions => _sessions;
 
     private User()
     {
@@ -20,5 +21,12 @@ public class User
         Username = username;
         Password = password;
         CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddSession(UserSession session)
+    {
+        _sessions.Add(session);
+        session.SetUser(this);
     }
 }

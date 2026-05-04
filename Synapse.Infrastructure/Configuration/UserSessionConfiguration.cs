@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Synapse.Domain.Users;
+using Synapse.Domain.Entities;
 
 namespace Synapse.Infrastructure.Persistence;
 
@@ -11,8 +11,8 @@ public class UserSessionConfiguration : IEntityTypeConfiguration<UserSession>
         builder.ToTable("UserSessions");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.RefreshToken).IsRequired();
-        builder.HasOne(x => x.user)
-            .WithMany(s => s.UserSessions)
+        builder.HasOne(x => x.User)
+            .WithMany(s => s.Sessions)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 

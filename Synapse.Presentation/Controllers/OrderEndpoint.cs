@@ -1,10 +1,10 @@
-using FluentValidation;
+/*using FluentValidation;
 using Synapse.Domain.Orders;
 using Synapse.Presentation.DTOs;
 
 namespace Synapse.Presentation.endpoints;
 
-public class OrderEndpoints : IEndpointDefinition
+public class OrderEndpoint : IEndpointDefinition
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
@@ -46,4 +46,4 @@ public class OrderEndpoints : IEndpointDefinition
         var order = await repository.GetByIdAsync(id);
         return order is not null ? Results.Ok(order) : Results.NotFound();
     }
-}
+}*/
